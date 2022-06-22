@@ -1,0 +1,37 @@
+time1: time=1.05e-008 at 1.05e-008
+time2: time=1.33045e-008 at 1.33045e-008
+tphl: time2-time1=2.80449e-009
+time3: time=3.55e-008 at 3.55e-008
+time4: time=3.83045e-008 at 3.83045e-008
+tplh: time4-time3=2.80447e-009
+timea: time=1.15468e-008 at 1.15468e-008
+timeb: time=1.57026e-008 at 1.57026e-008
+tfall: timeb-timea=4.15579e-009
+timec: time=3.65469e-008 at 3.65469e-008
+timed: time=4.07043e-008 at 4.07043e-008
+trise: timed-timec=4.15745e-009
+
+
+
+.meas time1 FIND time WHEN V(Vin) = 2.5V RISE=1
+.meas time2 FIND time WHEN V(Vout) = 2.5V FALL=1
+.meas tPHL param time2-time1
+ 
+.meas time3 FIND time WHEN V(Vin) = 2.5V FALL=1
+.meas time4 FIND time WHEN V(Vout) = 2.5V RISE=1
+.meas tPLH param time4-time3
+ 
+.meas timeA FIND time WHEN V(Vout) = 4.5V FALL=1
+.meas timeB FIND time WHEN V(Vout) = 0.5V FALL=1
+.meas tfall param timeB-timeA
+ 
+.meas timeC FIND time WHEN V(Vout) = 0.5V RISE=1
+.meas timeD FIND time WHEN V(Vout) = 4.5V RISE=1
+.meas trise param timeD-timeC
+
+
+
+.model nmos1 nmos(W=8u L=2u vto=1 kp=50u)
+.model pmos1 pmos(W=16u L=2u vto=-1 kp=25u)
+
+PULSE(0 5 8n 5n 5n 20n 60n)

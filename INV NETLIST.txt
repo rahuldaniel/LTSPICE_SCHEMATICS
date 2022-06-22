@@ -1,0 +1,26 @@
+* C:\Users\Rahul\Documents\LTSPICE\Draft1.asc
+M2 Vout Vin 0 0 NMOS1
+V1 Vin 0 PULSE(0 5 8n 5n 5n 20n 60n)
+V2 N001 0 5
+Cload Vout 0 1pf
+M1 Vout Vin N001 N001 PMOS1
+.model NMOS NMOS
+.model PMOS PMOS
+.lib C:\Users\Rahul\Documents\LTspiceXVII\lib\cmp\standard.mos
+.model nmos1 nmos(W=8u L=2u vto=1 kp=50u)
+.model pmos1 pmos(W=16u L=2u vto=-1 kp=25u)
+.tran 50ns
+.meas time1 FIND time WHEN V(Vin) = 2.5V RISE=1
+.meas time2 FIND time WHEN V(Vout) = 2.5V FALL=1
+.meas tPHL param time2-time1
+.meas time3 FIND time WHEN V(Vin) = 2.5V FALL=1
+.meas time4 FIND time WHEN V(Vout) = 2.5V RISE=1
+.meas tPLH param time4-time3
+.meas timeA FIND time WHEN V(Vout) = 4.5V FALL=1
+.meas timeB FIND time WHEN V(Vout) = 0.5V FALL=1
+.meas tfall param timeB-timeA
+.meas timeC FIND time WHEN V(Vout) = 0.5V RISE=1
+.meas timeD FIND time WHEN V(Vout) = 4.5V RISE=1
+.meas trise param timeD-timeC
+.backanno
+.end
